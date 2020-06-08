@@ -48,7 +48,7 @@ def baidu_translate():
             "transtype": "translang",
             "simple_means_flag": "3",
             "sign": sign,
-            "token": "9c369573d0bb14f22758aeb51c6506d8",    # token对应i的值
+            "token": "9c369573d0bb14f22758aeb51c6506d8",
         }
         res = requests.post(url, data=data, headers=headers)
         translate = json.loads(res.text)
@@ -60,4 +60,3 @@ def baidu_translate():
 
 if __name__ == "__main__":
     baidu_translate()
-    # http://fanyi.youdao.com/
