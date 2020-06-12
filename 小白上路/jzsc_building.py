@@ -15,7 +15,7 @@ import requests
 from Crypto.Cipher import AES
 
 
-# 可调用js执行解密方法，如果报错，可参考https://blog.csdn.net/kwoky/article/details/104841611
+# 可调用js执行解密方法，如果报错，可参考https://blog.csdn.net/kwoky/article/details/104841611(记得改回来，否则pip安装依赖可能报错)
 # python解密版本  包含对应的js版本
 class EncryptDate:
     def __init__(self, data):
