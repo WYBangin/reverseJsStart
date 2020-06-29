@@ -18,12 +18,17 @@ import random
 import base64
 
 
-def md5(t):
+def s(t):
     return hashlib.md5(t.encode(encoding="utf-8")).hexdigest()
 
 
 def base64_encrypt(t):
     return bytes.decode(base64.b64encode(t.encode("utf-8")))
+
+
+def c(u, p):
+    """账号, 密码"""
+    return s(u.lower() + s(p))
 
 
 def login_data(e):
@@ -34,10 +39,11 @@ def login_data(e):
     """
     t = "dafacloud_" + str(random.random())
     e["random"] = base64_encrypt(t)
-    e["password"] = md5(e["userName"] + md5(e["password"]))  # 最终密码是账号名+密码md5组合，进一步md5生成
+    i = c(e["userName"], e["password"])
+    e["password"] = s(i + t)  # 最终密码是账号名小写+密码md5组合，进一步md5生成i, i+t生产最终密码
     return e
 
 
 if __name__ == '__main__':
-    login_info = {"userName": "123456", "password": "123456"}
+    login_info = {"userName": "AA123456", "password": "123456"}
     print(login_data(login_info))
