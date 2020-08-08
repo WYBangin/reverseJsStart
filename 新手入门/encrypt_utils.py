@@ -1,5 +1,6 @@
 import hashlib
 import base64
+import hmac
 import random
 from urllib.parse import unquote
 
@@ -14,6 +15,10 @@ def bs64_decode(content):
 
 def bs64_encode(content):
     return bytes.decode(base64.b64encode(content.encode("utf-8")))
+
+
+def hmac_sha256(encrypt_str, key):
+    return hmac.new(bytes(key, 'latin-1'), msg=bytes(encrypt_str, 'latin-1'), digestmod=hashlib.sha256).hexdigest()
 
 
 if __name__ == "__main__":

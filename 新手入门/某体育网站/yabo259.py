@@ -31,9 +31,11 @@ def get_nonce_str(n=11):
 
 
 def get_sign(payload):
+    print("encry_str:", payload)
     encrypt_str = bs64_encode(payload)
     app_securit = "d77f7fcff637bc61bfb82fcbcd767bfa"
-    return hmac.new(bytes(app_securit, 'latin-1'), msg=bytes(bs64_encode(encrypt_str), 'latin-1'), digestmod=hashlib.sha256).hexdigest()
+    return hmac.new(bytes(app_securit, 'latin-1'), msg=bytes(encrypt_str, 'latin-1'),
+                    digestmod=hashlib.sha256).hexdigest()
 
 
 def yabo_login(user_name, password):
@@ -46,7 +48,8 @@ def yabo_login(user_name, password):
     url = "aHR0cDovL3d3dy55YWJvMjU5LmNvbS9tZW1iZXIvdjIvd2ViX2xvZ2lu"
     ts = str(time.time()).split(".")[0]
     nonce_str = get_nonce_str()
-    payload_old = "appKey=c97823e281c071c39e&domain=www.yabo259.com&name={}&nonce_str={}&password={}&timestamp={}&uuid=web-Windows-c2bbdeff48455c74599ee6cb02be2d91&appSecurit=d77f7fcff637bc61bfb82fcbcd767bfa".format(user_name, nonce_str, password, ts)
+    payload_old = "appKey=c97823e281c071c39e&domain=www.yabo259.com&name={}&nonce_str={}&password={}&timestamp={}&uuid=web-Windows-c2bbdeff48455c74599ee6cb02be2d91&appSecurit=d77f7fcff637bc61bfb82fcbcd767bfa".format(
+        user_name, nonce_str, password, ts)
     sign = get_sign(payload_old)
     payload_new = payload_old + "&sign=" + sign
     print("nonce_str: ", nonce_str)
@@ -73,3 +76,4 @@ def yabo_login(user_name, password):
 
 if __name__ == '__main__':
     print(yabo_login("admin", "123456"))
+# 非真实账号, 纯属练手js解析, 网页中带入相关参数即可验证解密
