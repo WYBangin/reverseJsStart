@@ -1,6 +1,5 @@
 var CryptoJS = require("crypto-js");
 
-
 function md5(c) {
     return CryptoJS.MD5(c).toString()
 }
@@ -17,6 +16,61 @@ function hmac_sha256(encry_str, key) {
     return CryptoJS.HmacSHA256(encry_str, key).toString()
 }
 
-// var aa = "d77f7fcff637bc61bfb82fcbcd767bfa"   // 密钥
-// var bb = "YXBwS2V5PWM5NzgyM2UyODFjMDcxYzM5ZSZkb21haW49d3d3LnlhYm8yNTkuY29tJm5hbWU9YWRtaW4mbm9uY2Vfc3RyPWUzOGkyN3ZvYmQmcGFzc3dvcmQ9MTIzNDU2JnRpbWVzdGFtcD0xNTk2ODY4OTE2JnV1aWQ9d2ViLVdpbmRvd3MtYzJiYmRlZmY0ODQ1NWM3NDU5OWVlNmNiMDJiZTJkOTEmYXBwU2VjdXJpdD1kNzdmN2ZjZmY2MzdiYzYxYmZiODJmY2JjZDc2N2JmYQ=="
-// console.log(hmac_sha256(bb, aa))
+// 以下是aes部分
+function base64_aes_encrypt(data, key, iv) {
+    var aes_key = CryptoJS.enc.Utf8.parse(key);
+    const option = {
+        iv: CryptoJS.enc.Utf8.parse(iv),
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7,
+    };
+    var encrypt = CryptoJS.AES.encrypt(JSON.stringify(data), aes_key, option);
+    var encrypt_data = encrypt.toString();
+    return encrypt_data
+}
+
+function base64_aes_decrypt(data, key, iv) {
+    var aes_key = CryptoJS.enc.Utf8.parse(key);
+    const option = {
+        iv: CryptoJS.enc.Utf8.parse(iv),
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7,
+    };
+    var decrypt = CryptoJS.AES.decrypt(data, aes_key, option);
+    var decrypt_data = JSON.parse(decrypt.toString(CryptoJS.enc.Utf8)); //解密后的数据
+    return decrypt_data
+}
+
+function hex_aes_encrypt(data, key, iv) {
+    var aes_key = CryptoJS.enc.Utf8.parse(key);
+    const option = {
+        iv: CryptoJS.enc.Utf8.parse(iv),
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7,
+    };
+    var encrypt = CryptoJS.AES.encrypt(JSON.stringify(data), aes_key, option);
+    var encrypt_data = encrypt.ciphertext.toString();
+    return encrypt_data
+}
+
+function hex_aes_decrypt(data, key, iv) {
+    var hex_str = CryptoJS.enc.Hex.parse(data);
+    var aes_key = CryptoJS.enc.Utf8.parse(key);
+    const option = {
+        iv: CryptoJS.enc.Utf8.parse(iv),
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7,
+    };
+    var encrypt = CryptoJS.AES.decrypt({
+        ciphertext: hex_str
+    }, aes_key, option);
+    var decrypt_data = encrypt.toString(CryptoJS.enc.Utf8);
+    return decrypt_data
+
+}
+
+// var kk = "20171109124536982017110912453698";
+// var vv = "2017110912453698";
+// var aa = hex_aes_encrypt("你好", kk, vv);
+// console.log(aa);    // 265d267f11e8786094a6ef8bf0d9320f
+// console.log(hex_aes_decrypt(aa, kk, vv));
