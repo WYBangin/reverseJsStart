@@ -21,8 +21,13 @@ def hmac_sha256(encrypt_str, key):
     return hmac.new(bytes(key, 'latin-1'), msg=bytes(encrypt_str, 'latin-1'), digestmod=hashlib.sha256).hexdigest()
 
 
+def hmac_sha1(encrypt_str):
+    return hashlib.sha1(encrypt_str.encode('utf-8')).hexdigest()
+
+
 if __name__ == "__main__":
-    print(bs64_encode("http://www.yabo259.com/member/v2/web_login"))
+    print(md5("123456"))
+
 
 """
 hmac加密方式
