@@ -21,8 +21,13 @@ def hmac_sha256(encrypt_str, key):
     return hmac.new(bytes(key, 'latin-1'), msg=bytes(encrypt_str, 'latin-1'), digestmod=hashlib.sha256).hexdigest()
 
 
-def hmac_sha1(encrypt_str):
+def sha1(encrypt_str):
+    """更新函数名, 避免混淆"""
     return hashlib.sha1(encrypt_str.encode('utf-8')).hexdigest()
+
+
+def sha256(encrypt_str):
+    return hashlib.sha256(encrypt_str.encode('utf-8')).hexdigest()
 
 
 if __name__ == "__main__":
