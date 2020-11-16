@@ -33,7 +33,6 @@ def sha256(encrypt_str):
 if __name__ == "__main__":
     print(md5("123456"))
 
-
 """
 hmac加密方式
 API_SECRET = 'd77f7fcff637bc61bfb82fcbcd767bfa'
